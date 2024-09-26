@@ -177,8 +177,8 @@ function App() {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
       handleAddList();
     }
   };
@@ -197,7 +197,7 @@ function App() {
           type="text"
           value={newListName}
           onChange={(e) => setNewListName(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           placeholder="输入新的列表名称"
         />
         <button onClick={handleAddList}>创建新列表</button>
