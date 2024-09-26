@@ -35,8 +35,8 @@ function TodoList({ id, name, onDelete }: TodoListProps) {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
       handleAddTodo();
     }
   };
@@ -77,7 +77,7 @@ function TodoList({ id, name, onDelete }: TodoListProps) {
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           placeholder="添加新的待办事项"
         />
         <button onClick={handleAddTodo}>添加</button>
