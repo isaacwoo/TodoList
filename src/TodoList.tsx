@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import EditableText from './EditableText';
 
 interface Todo {
   id: string;
@@ -10,9 +11,10 @@ interface TodoListProps {
   id: string;
   name: string;
   onDelete: () => void;
+  onEditName: (newName: string) => void;
 }
 
-function TodoList({ id, name, onDelete }: TodoListProps) {
+function TodoList({ id, name, onDelete, onEditName }: TodoListProps) {
   const [todos, setTodos] = useState<Todo[]>(() => {
     const savedTodos = localStorage.getItem(`todos_${id}`);
     return savedTodos ? JSON.parse(savedTodos) : [];
@@ -53,12 +55,22 @@ function TodoList({ id, name, onDelete }: TodoListProps) {
     setTodos(newTodos);
   };
 
+  const handleEditTodo = (todoId: string, newText: string) => {
+    setTodos(todos.map(todo => 
+      todo.id === todoId ? { ...todo, text: newText } : todo
+    ));
+  };
+
   const uncompletedTodos = todos.filter(todo => !todo.completed);
   const completedTodos = todos.filter(todo => todo.completed);
 
   const renderTodoItem = (todo: Todo, index: number) => (
     <li key={index} className={todo.completed ? 'completed' : ''}>
-      <span>{todo.text}</span>
+      <EditableText
+        value={todo.text}
+        onSave={(newText) => handleEditTodo(todo.id, newText)}
+        className="todo-text"
+      />
       <div>
         <button onClick={() => handleToggleComplete(index)} className="complete-btn">
           {todo.completed ? '取消完成' : '完成'}
@@ -68,9 +80,17 @@ function TodoList({ id, name, onDelete }: TodoListProps) {
     </li>
   );
 
+  const handleEditListName = (newName: string) => {
+    console.log(`List name changed to: ${newName}`);
+  };
+
   return (
     <div className="todo-list">
-      <h2>{name}</h2>
+      <EditableText
+        value={name}
+        onSave={onEditName}
+        className="list-name"
+      />
       <button className="list-delete-button" onClick={onDelete}>🗑️ 删除列表</button>
       <div>
         <input

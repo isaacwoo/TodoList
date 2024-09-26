@@ -86,6 +86,12 @@ function DraggableLists({ lists, setLists, onDeleteList }: {
     ));
   };
 
+  const handleEditListName = (id: string, newName: string) => {
+    setLists(lists.map(list => 
+      list.id === id ? { ...list, name: newName } : list
+    ));
+  };
+
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -120,6 +126,7 @@ function DraggableLists({ lists, setLists, onDeleteList }: {
                         id={list.id}
                         name={list.name}
                         onDelete={() => handleDeleteWithConfirmation(list.id, list.name)}
+                        onEditName={(newName) => handleEditListName(list.id, newName)}
                       />
                       <button
                         className="color-picker-button"
