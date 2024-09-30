@@ -80,6 +80,7 @@ function TodoList({ id, name, onDelete, onEditName }: TodoListProps) {
     </li>
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleEditListName = (newName: string) => {
     console.log(`List name changed to: ${newName}`);
   };
